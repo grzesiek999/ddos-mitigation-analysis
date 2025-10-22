@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+
+# Logs
+*.log
+
+# PyCharm
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# MacOS
+.DS_Store
+Thumbs.db
+
