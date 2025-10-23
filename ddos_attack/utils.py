@@ -1,29 +1,10 @@
 import random
-import time
-import asyncio
 import statistics
 import math
+import json
+from pathlib import Path
 
-TARGET = "http://YOUR.VPS.IP.OR.DOMAIN"
-ENDPOINTS = ["/", "/api/items?page=1", "/health"]
-USER_AGENTS = ["Mozilla/5.0", "curl/7.68.0", "CustomTestBot/1.0"]
-
-
-async def bot(name, session, limiter, stats, stop_time):
-    while time.time() < stop_time:
-        await limiter.acquire()
-        endpoint = random_choice(ENDPOINTS)
-        headers = {"User-Agent": random_choice(USER_AGENTS)}
-        start = time.time()
-        try:
-            async with session.get(TARGET + endpoint, headers=headers, timeout=10) as resp:
-                text = await resp.text()  # krótkie użycie odpowiedzi
-                latency = (time.time() - start) * 1000.0
-                stats['response_times'].append(latency)
-                stats['http_codes'].append(resp.status)
-        except Exception as e:
-            stats['errors_count'] += 1
-        await asyncio.sleep(0)
+CONFIG_DIR = Path(__file__).resolve().parents[1] / "config"
 
 # Return random choice from list
 def random_choice(array):
@@ -50,3 +31,10 @@ def percentile(data, p):
     d0 = data[int(f)] * (c-k)
     d1 = data[int(c)] * (k-f)
     return d0+d1
+
+# Load config
+def load_config(filename):
+    path = CONFIG_DIR / filename
+    if not path.exists():
+        raise FileNotFoundError(f"Config file {filename} not found: {path}")
+    return json.loads(path.read_text(encoding="utf-8"))
