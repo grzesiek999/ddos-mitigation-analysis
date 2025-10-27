@@ -10,14 +10,6 @@ CONFIG_DIR = Path(__file__).resolve().parents[1] / "config"
 def random_choice(array):
     return random.choice(array)
 
-# Statistic of bot
-def bot_statistic(stats):
-    print("Requests:", len(stats['response_times']))
-    print("Errors:", stats['errors_count'])
-    print("p50:", statistics.median(stats['response_times']))
-    print("p95:", percentile(stats['response_times'], 95))
-    print("p99:", percentile(stats['response_times'], 99))
-
 # Calculate percentile
 def percentile(data, p):
     data = sorted(data)

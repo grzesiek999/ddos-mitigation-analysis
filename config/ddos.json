@@ -1,14 +1,18 @@
 {
   "l7": {
-    "TARGET": "http://hexdent.com/",
+    "TARGET": "http://zs1olkusz.edu.pl",
     "BOTS_COUNT": 5000,
     "RPS": 10000,
     "DURATION": 60,
     "ENDPOINTS": [
-      "/",
-      "/api/items?page=1",
-      "/health",
-      "/wp-admin/admin-ajax.php"
+        "/",
+        "/api/items?page=1",
+        "/api/items?page=2",
+        "/api/search?q=test",
+        "/api/search?q=random",
+        "/health",
+        "/login",
+        "/dashboard"
     ],
     "USER_AGENTS": [
       "Mozilla/5.0",
