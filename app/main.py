@@ -4,4 +4,3 @@ import asyncio
 if __name__ == "__main__":
     l7_attack = L7Attack()
     asyncio.run(l7_attack.attack())
-    l7_attack.attack_statistic()
