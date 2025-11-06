@@ -1,6 +1,4 @@
-from ddos_attacks.attacks.l7_attack import L7Attack
-import asyncio
+from tests import l7_tests
 
 if __name__ == "__main__":
-    l7_attack = L7Attack()
-    asyncio.run(l7_attack.attack())
+    l7_tests.test()

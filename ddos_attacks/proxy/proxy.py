@@ -48,7 +48,7 @@ class ProxyPool:
             return random.choice(alive)
         elif self.mode == "weighted":
             weights = [p["ping"] for p in alive]
-            return random.choices(alive, weights=weights, k=1)[0]
+            return random.choices(alive, weights=weights, k=1)[0] # ??
         else:
             return random.choice(alive)
 

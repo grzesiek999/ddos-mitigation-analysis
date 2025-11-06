@@ -1,8 +1,6 @@
 {
   "l7": {
     "TARGET": "http://zs1olkusz.edu.pl",
-    "BOTS_COUNT": 1700,
-    "RPS": 8000,
     "DURATION": 60,
     "ENDPOINTS": [
         "/",

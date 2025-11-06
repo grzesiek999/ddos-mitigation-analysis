@@ -11,7 +11,7 @@ def write_json(filename, data):
         json.dump(data, file, indent=4)
 
 async def calculate_ping(proxy_url, proxy_port):
-    ddos_config = load_json(Path(__file__).resolve().parents[3] / "config/ddos.json" )
+    ddos_config = load_json(Path(__file__).resolve().parents[3] / "config/l7ddos.json" )
     url = ddos_config["l7"]["TARGET"]
     proxy = f"http://{proxy_url}:{proxy_port}"
     proxies_fallback = [

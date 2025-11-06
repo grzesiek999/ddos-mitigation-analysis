@@ -1,13 +1,10 @@
-import random, math, json, subprocess, sys
+import math, json, subprocess, sys
 from pathlib import Path
 from utils.proxy_select_app.run import run_proxy_select_app
 
 PROXY_RESULTS_DIR = Path(__file__).resolve().parents[1] / "utils/proxy_select_app/results/results.json"
 PROXY_POOL_DIR = Path(__file__).resolve().parents[1] / "data/proxypool.json"
 
-# Return random choice from list
-def random_choice(array):
-    return random.choice(array)
 
 # Calculate percentile
 def percentile(data, p):
@@ -30,7 +27,13 @@ def load_json(filename):
         raise FileNotFoundError(f"File {filename} not found: {path}")
     return json.loads(path.read_text(encoding="utf-8"))
 
-# Select allive proxy
+def save_json(filename, data, show: bool = False):
+    with open(filename, "a", encoding='utf-8') as file:
+        file.write(json.dumps(data) + '\n')
+    if show:
+        print(json.dumps(data, indent=4))
+
+# Select allive proxy and copy to data
 def select_allive_proxy():
     run_proxy_select_app()
 

