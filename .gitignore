@@ -4,9 +4,11 @@ venv/
 # Logs
 *.log
 logs/*
+!logs/.gitkeep
 
 # App
 data/*
+!data/.gitkeep
 
 # PyCharm
 .idea/
@@ -21,5 +23,8 @@ Thumbs.db
 
 # Support Aps
 utils/proxy_select_app/data/*
+!utils/proxy_select_app/data/.gitkeep
 utils/proxy_select_app/logs/*
+!utils/proxy_select_app/logs/.gitkeep
 utils/proxy_select_app/results/*
+!utils/proxy_select_app/results/.gitkeep
