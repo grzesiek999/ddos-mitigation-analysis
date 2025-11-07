@@ -2,6 +2,8 @@ import math, json, subprocess, sys
 from pathlib import Path
 from utils.proxy_select_app.run import run_proxy_select_app
 
+PROXY_SELECT_APP = "utils.proxy_select_app.app.main"
+PROXIES = Path(__file__).resolve().parents[1] / "utils/proxy_select_app/data/data.json"
 PROXY_RESULTS_DIR = Path(__file__).resolve().parents[1] / "utils/proxy_select_app/results/results.json"
 PROXY_POOL_DIR = Path(__file__).resolve().parents[1] / "data/proxypool.json"
 
@@ -35,7 +37,7 @@ def save_json(filename, data, show: bool = False):
 
 # Select allive proxy and copy to data
 def select_allive_proxy():
-    run_proxy_select_app()
+    run_proxy_select_app(app=PROXY_SELECT_APP, args=[PROXIES, PROXY_RESULTS_DIR])
 
     command = ["cp", PROXY_RESULTS_DIR, PROXY_POOL_DIR]
     try:

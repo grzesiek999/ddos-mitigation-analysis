@@ -11,9 +11,10 @@ DURATION = ddos_config["l7"]["DURATION"]
 
 
 class L7Attack:
-    def __init__(self, bots_count, rps):
+    def __init__(self, bots_count: int, rps: int, proxy: bool = False):
         self.bots_count = bots_count
         self.rps = rps
+        self.proxy = proxy
         self.duration = DURATION
         self.stats = {
             "response_times": [],
@@ -21,9 +22,9 @@ class L7Attack:
             "errors_count": 0
         }
 
-    async def attack(self, proxy: bool = False):
+    async def attack(self):
         pool = None
-        if proxy:
+        if self.proxy:
             select_allive_proxy()
             proxies = load_json(Path(__file__).resolve().parents[2] / "data/proxypool.json")
             pool = ProxyPool(proxies=proxies["proxies"], mode="roundrobin")
@@ -48,7 +49,8 @@ class L7Attack:
                 f"DATE: {datetime.datetime.now():%Y-%m-%d %H:%M:%S}": {
                     "---PARAMS---": {
                         "Bot Count": self.bots_count,
-                        "Rps": self.rps
+                        "Rps": self.rps,
+                        "Proxy": self.proxy
                     },
                     "---STATS---": {
                         "Requests": len(self.stats['response_times']),
@@ -65,7 +67,8 @@ class L7Attack:
                 f"DATE: {datetime.datetime.now():%Y-%m-%d %H:%M:%S}": {
                     "---PARAMS---": {
                         "Bot Count": self.bots_count,
-                        "Rps": self.rps
+                        "Rps": self.rps,
+                        "Proxy": self.proxy
                     },
                     "---STATS---": {
                         "Requests": 0,

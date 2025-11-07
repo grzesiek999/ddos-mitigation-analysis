@@ -4,8 +4,8 @@ from pathlib import Path
 
 LOGS_DIR = Path(__file__).resolve().parents[0] / "logs/logs.txt"
 
-def run_proxy_select_app():
-    command = ["python", "-m", "utils.proxy_select_app.app.main"]
+def run_proxy_select_app(app: str, args: list):
+    command = ["python", "-m", app, args[0], args[1]]
 
     print("⏳ Select & sort proxy is running...")
     try:

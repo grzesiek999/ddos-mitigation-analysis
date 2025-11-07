@@ -19,6 +19,10 @@ class L7Bot:
 
     async def job(self, session, limiter, stats, stop_time, pool: ProxyPool | None):
         while time.time() < stop_time:
+            await limiter.acquire()
+            endpoint = random.choice(self.endpoints)
+            headers = {"User-Agent": random.choice(self.user_agents)}
+            proxy_url = None
             if pool:
                 p = await pool.acquire(timeout=1.0)
                 if p is None:
@@ -26,33 +30,20 @@ class L7Bot:
                     continue
                 proxy_url = p.url
 
-            await limiter.acquire()
-            endpoint = random.choice(self.endpoints)
-            headers = {"User-Agent": random.choice(self.user_agents)}
             start = time.time()
-
-            if pool:
-                try:
-                    async with session.get(self.target + endpoint, headers=headers, proxy=proxy_url, timeout=10) as resp:
-                        self.text = await resp.text()
-                        response_time = (time.time() - start) * 1000.0
-                        stats['response_times'].append(response_time)
-                        stats['http_codes'].append(resp.status)
+            try:
+                async with session.get(self.target + endpoint, headers=headers, proxy=proxy_url, timeout=10) as resp:
+                    self.text = await resp.text()
+                    response_time = (time.time() - start) * 1000.0
+                    stats['response_times'].append(response_time)
+                    stats['http_codes'].append(resp.status)
+                    if pool:
                         pool.report_success(p)
-                except Exception as e:
-                    stats['errors_count'] += 1
+            except Exception as e:
+                stats['errors_count'] += 1
+                if pool:
                     pool.report_failure(p)
-                finally:
+            finally:
+                if pool:
                     pool.release(p)
-                await asyncio.sleep(0)
-
-            else:
-                try:
-                    async with session.get(self.target + endpoint, headers=headers, timeout=10) as resp:
-                        self.text = await resp.text()
-                        response_time = (time.time() - start) * 1000.0
-                        stats['response_times'].append(response_time)
-                        stats['http_codes'].append(resp.status)
-                except Exception as e:
-                    stats['errors_count'] += 1
-                await asyncio.sleep(0)
+            await asyncio.sleep(0)
