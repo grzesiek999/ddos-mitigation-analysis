@@ -14,6 +14,9 @@ class Proxy:
         self.last_success = 0.0
         self.dead_until = 0.0
 
+    def weight(self):
+        return 1000.0 / (self.ping + 1)
+
     def mark_success(self):
         self.failed_count = 0
         self.last_success = time.time()
@@ -47,8 +50,8 @@ class ProxyPool:
         elif self.mode == "random":
             return random.choice(alive)
         elif self.mode == "weighted":
-            weights = [p["ping"] for p in alive]
-            return random.choices(alive, weights=weights, k=1)[0] # ??
+            weights = [p.weight() for p in alive]
+            return random.choices(alive, weights=weights, k=1)[0]
         else:
             return random.choice(alive)
 

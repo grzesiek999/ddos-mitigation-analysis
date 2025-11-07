@@ -27,7 +27,7 @@ class L7Attack:
         if self.proxy:
             select_allive_proxy()
             proxies = load_json(Path(__file__).resolve().parents[2] / "data/proxypool.json")
-            pool = ProxyPool(proxies=proxies["proxies"], mode="roundrobin")
+            pool = ProxyPool(proxies=proxies["proxies"], mode="weighted")
 
         print("⏳ L7 Attack is running...")
         limiter = AsyncLimiter(self.rps, 1)

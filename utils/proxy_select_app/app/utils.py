@@ -59,7 +59,7 @@ async def select_data(data):
     pings = await asyncio.gather(*tasks, return_exceptions=True)
 
     for proxy, ping in zip(data["PROXIES"], pings):
-        if ping <= 200:
+        if ping <= 300:
             results["proxies"].append({
                 "ip": proxy["IP"],
                 "port": proxy["PORT"],
