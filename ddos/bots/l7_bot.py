@@ -1,7 +1,7 @@
 import time, asyncio, random
 from pathlib import Path
-from ddos_attacks.utils import load_json
-from ddos_attacks.proxy.proxy import ProxyPool
+from ddos.utils import load_json
+from ddos.proxy.proxy import ProxyPool
 
 ddos_config = load_json(Path(__file__).resolve().parents[2] / "config/l7ddos.json")
 TARGET = ddos_config["l7"]["TARGET"]

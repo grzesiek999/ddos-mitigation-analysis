@@ -1,9 +1,9 @@
 import time, datetime, asyncio, aiohttp, statistics
 from aiolimiter import AsyncLimiter
 from pathlib import Path
-from ddos_attacks.utils import load_json, percentile, select_allive_proxy, save_jsonl
-from ddos_attacks.bots.l7_bot import L7Bot
-from ddos_attacks.proxy.proxy import ProxyPool
+from ddos.utils import load_json, percentile, select_allive_proxy, save_jsonl
+from ddos.bots.l7_bot import L7Bot
+from ddos.proxy.proxy import ProxyPool
 
 ddos_config = load_json(Path(__file__).resolve().parents[2] / "config/l7ddos.json")
 LOGS = Path(__file__).resolve().parents[2] / "logs/l7attack.jsonl"
@@ -43,6 +43,7 @@ class L7Attack:
             await asyncio.gather(*tasks, return_exceptions=True)
         self.attack_statistic_save()
         self.attack_statistic_clear()
+        print("✅ L7 Attack finished.")
 
     def attack_statistic_save(self):
         if self.stats["response_times"]:

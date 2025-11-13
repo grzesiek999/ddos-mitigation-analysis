@@ -1,4 +1,10 @@
-from tests import l7_tests
+from tests import l7_tests, l4_tests
+
+
+def main():
+    # l7_tests.attack(proxy=True)
+    # l4_tests.search_ip()
+    l4_tests.attack()
 
 if __name__ == "__main__":
-    l7_tests.attack_series(n=20)
+    main()

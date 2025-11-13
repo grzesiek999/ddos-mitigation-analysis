@@ -32,3 +32,10 @@ utils/proxy_select_app/logs/*
 !utils/proxy_select_app/logs/.gitkeep
 utils/proxy_select_app/results/*
 !utils/proxy_select_app/results/.gitkeep
+
+utils/ip_from_url_app/data/*
+!utils/ip_from_url_app/data/.gitkeep
+utils/ip_from_url_app/logs/*
+!utils/ip_from_url_app/logs/.gitkeep
+utils/ip_from_url_app/results/*
+!utils/ip_from_url_app/results/.gitkeep

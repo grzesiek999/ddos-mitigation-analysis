@@ -1,6 +1,6 @@
 import statistics
 from pathlib import Path
-from ddos_attacks.utils import load_jsonl
+from ddos.utils import load_jsonl
 
 L7_ATTACK_LOGS = Path(__file__).resolve().parents[1] / "logs/l7attack.jsonl"
 BEST_PARAMS_RESULTS = Path(__file__).resolve().parents[0] / "results/best_params.txt"
