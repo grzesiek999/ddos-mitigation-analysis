@@ -1,7 +1,7 @@
 import time, datetime, asyncio, aiohttp, statistics
 from aiolimiter import AsyncLimiter
 from pathlib import Path
-from ddos_attacks.utils import load_json, percentile, select_allive_proxy, save_json
+from ddos_attacks.utils import load_json, percentile, select_allive_proxy, save_jsonl
 from ddos_attacks.bots.l7_bot import L7Bot
 from ddos_attacks.proxy.proxy import ProxyPool
 
@@ -41,9 +41,10 @@ class L7Attack:
                 bot = L7Bot(i)
                 tasks.append(asyncio.create_task(bot.job(session, limiter, self.stats, stop_time, pool)))
             await asyncio.gather(*tasks, return_exceptions=True)
-        self.attack_statistic()
+        self.attack_statistic_save()
+        self.attack_statistic_clear()
 
-    def attack_statistic(self):
+    def attack_statistic_save(self):
         if self.stats["response_times"]:
             logs = {
                 f"DATE: {datetime.datetime.now():%Y-%m-%d %H:%M:%S}": {
@@ -61,7 +62,7 @@ class L7Attack:
                     }
                 }
             }
-            save_json(filename=LOGS, data=logs, show=True)
+            save_jsonl(filename=LOGS, data=logs, show=True)
         else:
             logs = {
                 f"DATE: {datetime.datetime.now():%Y-%m-%d %H:%M:%S}": {
@@ -79,4 +80,11 @@ class L7Attack:
                     }
                 }
             }
-            save_json(filename=LOGS, data=logs, show=True)
+            save_jsonl(filename=LOGS, data=logs, show=True)
+
+    def attack_statistic_clear(self):
+        self.stats = {
+            "response_times": [],
+            "http_codes": [],
+            "errors_count": 0
+        }

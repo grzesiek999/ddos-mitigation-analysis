@@ -21,6 +21,10 @@ data/*
 .DS_Store
 Thumbs.db
 
+# Statistics
+stats/results/*
+!stats/results/.gitkeep
+
 # Support Aps
 utils/proxy_select_app/data/*
 !utils/proxy_select_app/data/.gitkeep

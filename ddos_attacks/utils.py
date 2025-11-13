@@ -29,11 +29,20 @@ def load_json(filename):
         raise FileNotFoundError(f"File {filename} not found: {path}")
     return json.loads(path.read_text(encoding="utf-8"))
 
-def save_json(filename, data, show: bool = False):
+# Save Jsonl
+def save_jsonl(filename, data, show: bool = False):
     with open(filename, "a", encoding='utf-8') as file:
         file.write(json.dumps(data) + '\n')
     if show:
         print(json.dumps(data, indent=4))
+
+# Load Jsonl
+def load_jsonl(filename):
+    logs = []
+    with open(filename, "r", encoding='utf-8') as file:
+        for line in file:
+            logs.append(json.loads(line))
+    return logs
 
 # Select allive proxy and copy to data
 def select_allive_proxy():
