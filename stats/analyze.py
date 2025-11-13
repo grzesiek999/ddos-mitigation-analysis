@@ -10,7 +10,8 @@ BEST_PARAMS_RESULTS = Path(__file__).resolve().parents[0] / "results/best_params
 def best_params(proxy_flag: bool):
     logs = load_jsonl(L7_ATTACK_LOGS)
     data = {}
-    temp = []
+    bot_count_arr = []
+    rps_arr = []
 
     for log in logs:
         date_key = list(log.keys())[0]
@@ -19,8 +20,10 @@ def best_params(proxy_flag: bool):
             continue
         stats = log[date_key]['---STATS---']
         bc = params['Bot Count']
+        rps = params['Rps']
         if log[date_key]['---PARAMS---']['Bot Count'] not in data:
-            temp.append(bc)
+            bot_count_arr.append(bc)
+            rps_arr.append(rps)
             data[bc] = {}
             data[bc]['Requests'] = []
             data[bc]['Errors'] = []
@@ -34,25 +37,21 @@ def best_params(proxy_flag: bool):
 
     req_avg = []
     err_avg = []
-
-    for item in temp:
+    for item in bot_count_arr:
         req_avg.append(statistics.mean(data[item]['Requests']))
         err_avg.append(statistics.mean(data[item]['Errors']))
 
     max_val = max(req_avg)
-
     for i in range(len(req_avg)):
         if max_val - req_avg[i] > 1000:
             req_avg[i] = 0
 
     score = []
-
-    for i in range(len(temp)):
+    for i in range(len(bot_count_arr)):
         score.append(req_avg[i] / err_avg[i])
 
     idx = score.index(max(score))
-
-    results = f"Proxy: {proxy_flag}   Bots count: {temp[idx]}   Rps: {temp[idx]*5}   Score: {round(score[idx], 2)}\n"
+    results = f"Proxy: {proxy_flag}   Bots count: {bot_count_arr[idx]}   Rps: {rps_arr[idx]}   Score: {round(score[idx], 2)}\n"
     with open(BEST_PARAMS_RESULTS, "a", encoding="utf-8") as file:
         file.write(results)
         file.close()
