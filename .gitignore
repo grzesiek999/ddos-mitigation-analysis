@@ -22,8 +22,8 @@ data/*
 Thumbs.db
 
 # Statistics
-stats/results/*
-!stats/results/.gitkeep
+utils/analyses/results/*
+!utils/analyses/results/.gitkeep
 
 # Support Aps
 utils/proxy_select_app/data/*
@@ -39,3 +39,10 @@ utils/ip_from_url_app/logs/*
 !utils/ip_from_url_app/logs/.gitkeep
 utils/ip_from_url_app/results/*
 !utils/ip_from_url_app/results/.gitkeep
+
+utils/analyses/results/l7
+!utils/analyses/results/l7/.gitkeep
+utils/analyses/results/l4
+!utils/analyses/results/l4/.gitkeep
+utils/analyses/results/l3
+!utils/analyses/results/l3/.gitkeep

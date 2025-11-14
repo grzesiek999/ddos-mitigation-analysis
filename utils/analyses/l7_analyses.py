@@ -1,13 +1,14 @@
 import statistics
 from pathlib import Path
 from ddos.utils import load_jsonl
+from utils.analyses.utils import save_jsonl
 
-L7_ATTACK_LOGS = Path(__file__).resolve().parents[1] / "logs/l7attack.jsonl"
-BEST_PARAMS_RESULTS = Path(__file__).resolve().parents[0] / "results/best_params.txt"
+L7_ATTACK_LOGS = Path(__file__).resolve().parents[2] / "logs/l7attack.jsonl"
+BEST_PARAMS_RESULTS = Path(__file__).resolve().parents[0] / "results/l7/best_params.jsonl"
 
 
 # Analyze statistics l7 attack from logs in search best params
-def best_params(proxy_flag: bool):
+def search_best_params(proxy_flag: bool):
     logs = load_jsonl(L7_ATTACK_LOGS)
     data = {}
     bot_count_arr = []
@@ -51,8 +52,10 @@ def best_params(proxy_flag: bool):
         score.append(req_avg[i] / err_avg[i])
 
     idx = score.index(max(score))
-    results = f"Proxy: {proxy_flag}   Bots count: {bot_count_arr[idx]}   Rps: {rps_arr[idx]}   Score: {round(score[idx], 2)}\n"
-    with open(BEST_PARAMS_RESULTS, "a", encoding="utf-8") as file:
-        file.write(results)
-        file.close()
-    print(results)
+    results = {
+        "Proxy": proxy_flag,
+        "Bots count": bot_count_arr[idx],
+        "Rps": rps_arr[idx],
+        "Score": round(score[idx], 2)
+    }
+    save_jsonl(filename=BEST_PARAMS_RESULTS, data=results, show=True)

@@ -71,7 +71,7 @@ class L4UDPAttack:
         self.target_port = TARGET_PORT
         self.pps = PPS
         self.duration = DURATION
-        self.stats = {
+        self.analyses = {
             "packets_sent": 0,
             "pps_achieved": 0,
             "bytes_send": 0,
