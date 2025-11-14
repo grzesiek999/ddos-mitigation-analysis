@@ -5,7 +5,7 @@ from ddos.bots.l4_bot import L4SYNBot
 from ddos.utils import load_json, save_jsonl
 
 ddos_config = load_json(Path(__file__).resolve().parents[2] / "config/l4ddos.json")
-LOGS = Path(__file__).resolve().parents[2] / "logs/l4attack.jsonl"
+LOGS = Path(__file__).resolve().parents[2] / "logs/l4syn_attack.jsonl"
 DURATION = ddos_config["l4"]["DURATION"]
 
 
