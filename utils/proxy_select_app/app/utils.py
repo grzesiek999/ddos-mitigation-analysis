@@ -1,6 +1,6 @@
 import json, aiohttp, asyncio, time
 from pathlib import Path
-from ddos.utils import load_json
+from utils.utils import load_json
 
 def read_json(filename):
     with open(filename, mode="r") as file:

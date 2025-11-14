@@ -1,9 +1,9 @@
 import time, datetime, asyncio, aiohttp, statistics
 from aiolimiter import AsyncLimiter
 from pathlib import Path
-from ddos.utils import load_json, percentile, select_allive_proxy, save_jsonl
 from ddos.bots.l7_bot import L7Bot
 from ddos.proxy.proxy import ProxyPool
+from utils.utils import save_jsonl, percentile, select_allive_proxy, load_json
 
 ddos_config = load_json(Path(__file__).resolve().parents[2] / "config/l7ddos.json")
 LOGS = Path(__file__).resolve().parents[2] / "logs/l7attack.jsonl"

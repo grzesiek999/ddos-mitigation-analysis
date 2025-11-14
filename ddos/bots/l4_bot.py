@@ -3,7 +3,7 @@ from scapy.layers.inet import IP, TCP
 from scapy.sendrecv import send
 from scapy.volatile import RandIP, RandShort
 from pathlib import Path
-from ddos.utils import load_json
+from utils.utils import load_json
 
 ddos_config = load_json(Path(__file__).resolve().parents[2] / "config/l4ddos.json")
 TARGET_IP = ddos_config["l4"]["TARGET_IP"]

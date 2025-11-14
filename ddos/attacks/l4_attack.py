@@ -1,8 +1,7 @@
 import time, datetime
 from pathlib import Path
-
 from ddos.bots.l4_bot import L4SYNBot
-from ddos.utils import load_json, save_jsonl
+from utils.utils import save_jsonl, load_json
 
 ddos_config = load_json(Path(__file__).resolve().parents[2] / "config/l4ddos.json")
 LOGS = Path(__file__).resolve().parents[2] / "logs/l4syn_attack.jsonl"

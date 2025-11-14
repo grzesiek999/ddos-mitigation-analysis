@@ -1,7 +1,6 @@
 import statistics
 from pathlib import Path
-from ddos.utils import load_jsonl
-from utils.analyses.utils import save_jsonl
+from utils.utils import save_jsonl, load_jsonl
 
 L7_ATTACK_LOGS = Path(__file__).resolve().parents[2] / "logs/l7attack.jsonl"
 BEST_PARAMS_RESULTS = Path(__file__).resolve().parents[0] / "results/l7/best_params.jsonl"
@@ -22,17 +21,17 @@ def search_best_params(proxy_flag: bool):
         stats = log[date_key]['---STATS---']
         bc = params['Bot Count']
         rps = params['Rps']
-        if log[date_key]['---PARAMS---']['Bot Count'] not in data:
+        if bc not in data:
             bot_count_arr.append(bc)
             rps_arr.append(rps)
             data[bc] = {}
             data[bc]['Requests'] = []
             data[bc]['Errors'] = []
-            if stats['Requests'] >= 10000:
+            if stats['Requests'] >= 10_000:
                 data[bc]['Requests'].append(stats['Requests'])
                 data[bc]['Errors'].append(stats['Errors'])
         else:
-            if stats['Requests'] >= 10000:
+            if stats['Requests'] >= 10_000:
                 data[bc]['Requests'].append(stats['Requests'])
                 data[bc]['Errors'].append(stats['Errors'])
 
