@@ -1,7 +1,7 @@
 import time
 from utils.ip_from_url_app.run import run_ip_from_url_app
 from ddos.attacks.l4_attack import L4SYNAttack
-from utils.analyses.l4_analyses import search_best_thrds_num
+from utils.analyses.l4syn_analyses import search_best_thrds_num
 
 # Test n attack series for search best params
 def attack_series(n: int = 10):

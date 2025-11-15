@@ -24,32 +24,23 @@ def search_best_params(proxy_flag: bool):
         if bc not in data:
             bot_count_arr.append(bc)
             rps_arr.append(rps)
-            data[bc] = {}
-            data[bc]['Requests'] = []
-            data[bc]['Errors'] = []
+            create_data_tables(data=data, bc=bc)
             if stats['Requests'] >= 10_000:
-                data[bc]['Requests'].append(stats['Requests'])
-                data[bc]['Errors'].append(stats['Errors'])
+                fill_data_tables(data_dict=data[bc], stats=stats)
         else:
             if stats['Requests'] >= 10_000:
-                data[bc]['Requests'].append(stats['Requests'])
-                data[bc]['Errors'].append(stats['Errors'])
+                fill_data_tables(data_dict=data[bc], stats=stats)
 
     req_avg = []
-    err_avg = []
-    for item in bot_count_arr:
-        req_avg.append(statistics.mean(data[item]['Requests']))
-        err_avg.append(statistics.mean(data[item]['Errors']))
-
-    max_val = max(req_avg)
-    for i in range(len(req_avg)):
-        if max_val - req_avg[i] > 1000:
-            req_avg[i] = 0
+    errors_avg = []
+    p50_avg = []
+    p95_avg = []
+    p99_avg = []
+    for bc in bot_count_arr:
+        fill_avg_arrays(req_avg, errors_avg, p50_avg, p95_avg, p99_avg, data, bc)
 
     score = []
-    for i in range(len(bot_count_arr)):
-        score.append(req_avg[i] / err_avg[i])
-
+    calculate_score(score, req_avg, bot_count_arr, errors_avg)
     idx = score.index(max(score))
     results = {
         "Proxy": proxy_flag,
@@ -58,3 +49,33 @@ def search_best_params(proxy_flag: bool):
         "Score": round(score[idx], 2)
     }
     save_jsonl(filename=BEST_PARAMS_RESULTS, data=results, show=True)
+
+def calculate_score(score: list, req_avg, bot_count_arr, errors_avg):
+    max_val = max(req_avg)
+    for i in range(len(req_avg)):
+        if max_val - req_avg[i] > 1000:
+            req_avg[i] = 0
+    for i in range(len(bot_count_arr)):
+        score.append(req_avg[i] / errors_avg[i])
+
+def fill_avg_arrays(req_avg, errors_avg, p50_avg, p95_avg, p99_avg, data:dict, bc: int):
+    req_avg.append(statistics.mean(data[bc]["Requests"]))
+    errors_avg.append(statistics.mean(data[bc]["Errors"]))
+    p50_avg.append(statistics.mean(data[bc]["p50"]))
+    p95_avg.append(statistics.mean(data[bc]["p95"]))
+    p99_avg.append(statistics.mean(data[bc]["p99"]))
+
+def fill_data_tables(data_dict: dict, stats: dict):
+    data_dict["Requests"].append(stats["Requests"])
+    data_dict["Errors"].append(stats["Errors"])
+    data_dict['p50'].append(stats["p50"])
+    data_dict['p95'].append(stats["p95"])
+    data_dict['p99'].append(stats["p99"])
+
+def create_data_tables(data: dict, bc: int):
+    data[bc] = {}
+    data[bc]['Requests'] = []
+    data[bc]['Errors'] = []
+    data[bc]['p50'] = []
+    data[bc]['p95'] = []
+    data[bc]['p99'] = []

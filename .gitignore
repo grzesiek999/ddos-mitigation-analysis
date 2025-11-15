@@ -42,7 +42,9 @@ utils/ip_from_url_app/results/*
 
 utils/analyses/results/l7
 !utils/analyses/results/l7/.gitkeep
-utils/analyses/results/l4
-!utils/analyses/results/l4/.gitkeep
+utils/analyses/results/l4syn
+!utils/analyses/results/l4syn/.gitkeep
+!utils/analyses/results/l4udp
+!utils/analyses/results/l4udp/.gitkeep
 utils/analyses/results/l3
 !utils/analyses/results/l3/.gitkeep
