@@ -43,7 +43,7 @@ class L4UDPBot(threading.Thread):
         self.name = f"bot{num}"
         self.local_packets_sent = 0
         self.local_errors_count = 0
-        self.local_bytes_send = 0
+        self.local_bytes_sent = 0
 
     def run(self):
         while time.time() < self.stop_time:
@@ -54,7 +54,7 @@ class L4UDPBot(threading.Thread):
                     payload
                 send(packet, verbose=0)
                 self.local_packets_sent += 1
-                self.local_bytes_send += len(packet)
+                self.local_bytes_sent += len(packet)
                 if self.pps:
                     time.sleep(1.0/self.pps)
             except Exception as e:

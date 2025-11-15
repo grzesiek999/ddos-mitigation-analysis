@@ -7,7 +7,7 @@ ddos_config = load_json(Path(__file__).resolve().parents[2] / "config/l4ddos.jso
 SYN_LOGS = Path(__file__).resolve().parents[2] / "logs/l4syn_attack.jsonl"
 UDP_LOGS = Path(__file__).resolve().parents[2] / "logs/l4udp_attack.jsonl"
 DURATION = ddos_config["l4"]["DURATION"]
-GIGABITS_DIVISOR = 1_000_000_000.0
+MEGABITS_DIVISOR = 1_000_000.0
 
 
 class L4SYNAttack:
@@ -72,9 +72,9 @@ class L4UDPAttack:
         self.pps = pps
         self.stats = {
             "packets_sent": 0,
-            "bytes_send": 0,
+            "bytes_sent": 0,
             "pps_achieved": 0,
-            "gbps": 0,
+            "mbps": 0,
             "errors_count": 0
         }
 
@@ -91,7 +91,7 @@ class L4UDPAttack:
         for bot in bots:
             bot.join()
             self.stats["packets_sent"] += bot.local_packets_sent
-            self.stats["bytes_send"] += bot.local_bytes_sent
+            self.stats["bytes_sent"] += bot.local_bytes_sent
             self.stats["errors_count"] += bot.local_errors_count
 
         print("✅ L4 UDP Attack finished.")
@@ -102,7 +102,7 @@ class L4UDPAttack:
     def attack_statistic_save(self, thrds_num: int, total_duration):
         if total_duration > 0:
             self.stats["pps_achieved"] = self.stats["packets_sent"] / total_duration
-            self.stats["gbps"] = (self.stats["bytes_send"] * 8) / (total_duration * GIGABITS_DIVISOR)
+            self.stats["mbps"] = (self.stats["bytes_sent"] * 8) / (total_duration * MEGABITS_DIVISOR)
         logs = {
             f"{datetime.datetime.now():%Y-%m-%d %H:%M:%S.%f}": {
                 "---PARAMS---": {
@@ -111,9 +111,9 @@ class L4UDPAttack:
                 },
                 "---STATS---": {
                     "Packets Sent": self.stats["packets_sent"],
-                    "Bytes Send": self.stats["bytes_send"],
+                    "Bytes Sent": self.stats["bytes_sent"],
                     "Pps": self.stats["pps_achieved"],
-                    "Gbps": self.stats["gbps"],
+                    "Mbps": self.stats["mbps"],
                     "Errors": self.stats["errors_count"]
                 }
             }
@@ -123,8 +123,8 @@ class L4UDPAttack:
     def attack_statistic_clear(self):
         self.stats = {
             "packets_sent": 0,
-            "bytes_send": 0,
+            "bytes_sent": 0,
             "pps_achieved": 0,
-            "gbps": 0,
+            "mbps": 0,
             "errors_count": 0
         }
