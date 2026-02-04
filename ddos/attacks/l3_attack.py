@@ -37,7 +37,7 @@ class L3Attack:
             self.stats["bytes_send"] += bot.local_bytes_sent
             self.stats["errors_count"] += bot.local_errors_count
 
-        print("✅ L4 L3 ICMP Attack finished.")
+        print("✅ L3 ICMP Attack finished.")
         total_duration = time.time() - start_time
         self.attack_statistic_save(thrds_num=num_threads, total_duration=total_duration)
         self.attack_statistic_clear()
@@ -57,7 +57,7 @@ class L3Attack:
                     "Packets Sent": self.stats["packets_sent"],
                     "Bytes Sent": self.stats["bytes_send"],
                     "Pps": round(self.stats["pps_achieved"], 2),
-                    "Mbps": round(self.stats["gbps"], 4),
+                    "Mbps": round(self.stats["mbps"], 4),
                     "Errors": self.stats["errors_count"]
                 }
             }
@@ -69,6 +69,6 @@ class L3Attack:
             "packets_sent": 0,
             "bytes_send": 0,
             "pps_achieved": 0,
-            "gbps": 0,
+            "mbps": 0,
             "errors_count": 0
         }
