@@ -1,6 +1,6 @@
 {
   "l3": {
-    "TARGET": "http://zs1olkusz.edu.pl",
+    "TARGET_IP": "212.85.111.253",
     "DURATION": 60
   }
 }
