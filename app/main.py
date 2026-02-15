@@ -6,9 +6,9 @@ def main():
     #l7_tests.attack_series(n=20)
     #l4syn_tests.search_ip()
     #l4syn_tests.attack()
-    #l4syn_tests.attack_series(n=20)
+    l4syn_tests.attack_series(n=10)
     #l4udp_tests.attack()
-    #l4udp_tests.attack_series(2)
+    #l4udp_tests.attack_series(n=20)
     #l3_tests.attack()
     #l3_tests.attack_series(n=20)
 
