@@ -1,6 +1,6 @@
 {
   "l4": {
-    "TARGET_IP": "212.85.111.253",
+    "TARGET_IP": "172.205.212.78",
     "TARGET_PORT": 443,
     "DURATION": 60
   }

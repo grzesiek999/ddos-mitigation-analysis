@@ -56,7 +56,12 @@ def calculate_score(score: list, req_avg, bot_count_arr, errors_avg):
         if max_val - req_avg[i] > 1000:
             req_avg[i] = 0
     for i in range(len(bot_count_arr)):
-        score.append(req_avg[i] / errors_avg[i])
+        if errors_avg[i] > 0:
+            score.append(req_avg[i] / errors_avg[i])
+        elif errors_avg[i] == 0:
+            score.append(req_avg[i] / 1)
+        else:
+            raise Exception("AVG < 0, something went wrong")
 
 def fill_avg_arrays(req_avg, errors_avg, p50_avg, p95_avg, p99_avg, data:dict, bc: int):
     req_avg.append(statistics.mean(data[bc]["Requests"]))

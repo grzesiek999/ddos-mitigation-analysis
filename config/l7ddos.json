@@ -1,6 +1,6 @@
 {
   "l7": {
-    "TARGET": "http://zs1olkusz.edu.pl",
+    "TARGET": "http://172.205.212.78",
     "DURATION": 60,
     "ENDPOINTS": [
         "/",
