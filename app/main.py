@@ -12,7 +12,7 @@ def main():
     #l3_tests.attack_series(n=20)
     #l7_tests.attack_series(n=20)
     #run_analysis()
-    run_l7_stats(proxy=False)
+    run_l7_stats(proxy=True)
 
 if __name__ == "__main__":
     main()
