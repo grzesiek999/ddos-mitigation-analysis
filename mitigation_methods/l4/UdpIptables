@@ -1,0 +1,2 @@
+iptables -A INPUT -p udp -m limit --limit 1000/second --limit-burst 2000 -j ACCEPT
+iptables -A INPUT -p udp -j DROP
