@@ -14,12 +14,17 @@ def attack_series(n: int = 10):
             for i in range(n):
                 asyncio.run(l7_attack.attack())
                 time.sleep(10)
-        search_best_params(proxy_flag=proxy)
+        # search_best_params(proxy_flag=proxy)
 
-    bot_count = [250, 500, 750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000]
-    requests_per_second = [ x*5 for x in bot_count ]
-    temp(bot_count, requests_per_second, False)
-    temp(bot_count, requests_per_second, True)
+    bot_count_no_proxy = [1000]
+    requests_per_second_no_proxy = [ x*5 for x in bot_count_no_proxy ]
+    temp(bot_count_no_proxy, requests_per_second_no_proxy, False)
+
+    time.sleep(1200)
+
+    bot_count_proxy = [2500]
+    requests_per_second_proxy = [x * 5 for x in bot_count_proxy]
+    temp(bot_count_proxy, requests_per_second_proxy, True)
 
 # Test single attack
 def attack(proxy: bool, bots_count: int = 1500, rps: int = 7500):

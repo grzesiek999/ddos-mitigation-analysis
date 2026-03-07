@@ -18,10 +18,10 @@ def search_best_thrds_num():
         if thrds_num not in data:
             threads_arr.append(thrds_num)
             create_data_tables(data=data, thrds_num=thrds_num)
-            if stats['Packets Sent'] >= 100_000:
+            if stats['Packets Sent'] >= 10_000:
                 fill_data_tables(data_dict=data[thrds_num], stats=stats)
         else:
-            if stats['Packets Sent'] >= 100_000:
+            if stats['Packets Sent'] >= 10_000:
                 fill_data_tables(data_dict=data[thrds_num], stats=stats)
 
     ps_avg = []
