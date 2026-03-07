@@ -1,0 +1,4 @@
+sudo nginx-profile off
+sudo nginx-profile conn
+sudo nginx-profile rate
+sudo nginx-profile both
