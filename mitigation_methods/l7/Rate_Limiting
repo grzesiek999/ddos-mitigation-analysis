@@ -1,8 +1,0 @@
-limit_req_zone $binary_remote_addr zone=one:10m rate=300r/s;
-
-server {
-    location / {
-        limit_req zone=one burst=100 nodelay;
-        proxy_pass http://127.0.0.1:8000;
-    }
-}
