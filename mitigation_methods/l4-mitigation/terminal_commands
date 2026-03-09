@@ -1,0 +1,4 @@
+sudo l4-profile off
+sudo l4-profile tcp
+sudo l4-profile udp
+sudo l4-profile both

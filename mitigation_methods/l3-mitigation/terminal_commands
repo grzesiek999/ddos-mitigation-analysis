@@ -1,0 +1,4 @@
+sudo l3-profile off
+sudo l3-profile sysctl
+sudo l3-profile iptables
+sudo l3-profile both

@@ -1,2 +1,0 @@
-sysctl -w net.ipv4.icmp_ratelimit=100
-sysctl -w net.ipv4.icmp_ratemask=88089

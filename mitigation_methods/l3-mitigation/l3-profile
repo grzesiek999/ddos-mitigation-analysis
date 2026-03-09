@@ -1,0 +1,23 @@
+#!/bin/bash
+set -e
+
+PROFILE="$1"
+
+case "$PROFILE" in
+  off)
+    /etc/l3-mitigation/profiles/off.sh
+    ;;
+  sysctl)
+    /etc/l3-mitigation/profiles/sysctl.sh
+    ;;
+  iptables)
+    /etc/l3-mitigation/profiles/iptables.sh
+    ;;
+  both)
+    /etc/l3-mitigation/profiles/both.sh
+    ;;
+  *)
+    echo "Użycie: $0 {off|sysctl|iptables|both}"
+    exit 1
+    ;;
+esac
