@@ -4,14 +4,13 @@ set -e
 sysctl -w net.ipv4.icmp_ratelimit=100
 sysctl -w net.ipv4.icmp_ratemask=88089
 
-iptables -D INPUT -p icmp --icmp-type echo-request -j L3_ICMP_MITIGATION 2>/dev/null || true
-iptables -F L3_ICMP_MITIGATION 2>/dev/null || true
-iptables -X L3_ICMP_MITIGATION 2>/dev/null || true
+# delete old rules if exist
+iptables -D INPUT -p icmp --icmp-type echo-request -m limit --limit 50/second --limit-burst 100 -j ACCEPT 2>/dev/null || true
+iptables -D INPUT -p icmp --icmp-type echo-request -j DROP 2>/dev/null || true
 
-iptables -N L3_ICMP_MITIGATION
-iptables -A L3_ICMP_MITIGATION -m limit --limit 50/second -j ACCEPT
-iptables -A L3_ICMP_MITIGATION -j DROP
-iptables -A INPUT -p icmp --icmp-type echo-request -j L3_ICMP_MITIGATION
+# Add iptables rules
+iptables -I INPUT 1 -p icmp --icmp-type echo-request -m limit --limit 50/second --limit-burst 100 -j ACCEPT
+iptables -I INPUT 2 -p icmp --icmp-type echo-request -j DROP
 
 echo both > /etc/l3-mitigation/active_profile
 echo "L3 profile: both"
