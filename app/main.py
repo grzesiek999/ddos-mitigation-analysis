@@ -2,18 +2,11 @@ from tests import l7_tests, l4syn_tests, l4udp_tests, l3_tests
 import time
 
 def main():
-    '''L3 sysctl.sh'''
-    #l3_tests.attack_series(n=20)
-    #time.sleep(1200)
-    '''L3 iptables.sh'''
-    #l3_tests.attack_series(n=20)
-    #time.sleep(1200)
-
     '''L4 tcp.sh'''
-    l4syn_tests.attack_series(n=20)
-    #time.sleep(1200)
+    l4syn_tests.attack_series(n=2)
+    time.sleep(600)
     '''L4 udp.sh'''
-    #l4udp_tests.attack_series(n=20)
+    l4udp_tests.attack_series(n=2)
     #time.sleep(1200)
     '''l7 Rate limiting'''
     #l7_tests.attack_series(n=20)
