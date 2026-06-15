@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+venv/
+# Logs
+*.log
+logs/*
+!logs/.gitkeep
+
+# App
+data/*
+!data/.gitkeep
+
+# PyCharm
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# MacOS
+.DS_Store
+Thumbs.db
+
+# Statistics
+utils/analyses/results/*
+!utils/analyses/results/.gitkeep
+
+# Support Aps
+utils/proxy_select_app/data/*
+!utils/proxy_select_app/data/.gitkeep
+utils/proxy_select_app/logs/*
+!utils/proxy_select_app/logs/.gitkeep
+utils/proxy_select_app/results/*
+!utils/proxy_select_app/results/.gitkeep
+
+utils/ip_from_url_app/data/*
+!utils/ip_from_url_app/data/.gitkeep
+utils/ip_from_url_app/logs/*
+!utils/ip_from_url_app/logs/.gitkeep
+utils/ip_from_url_app/results/*
+!utils/ip_from_url_app/results/.gitkeep
+
+utils/analyses/results/l7
+!utils/analyses/results/l7/.gitkeep
+utils/analyses/results/l4syn
+!utils/analyses/results/l4syn/.gitkeep
+utils/analyses/results/l4udp
+!utils/analyses/results/l4udp/.gitkeep
+utils/analyses/results/l3
+!utils/analyses/results/l3/.gitkeep

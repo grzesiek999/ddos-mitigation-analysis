@@ -1,0 +1,25 @@
+#!/bin/bash
+set -e
+
+PROFILE="$1"
+
+case "$PROFILE" in
+  off)
+    /etc/l4-mitigation/profiles/off.sh
+    ;;
+  tcp)
+    /etc/l4-mitigation/profiles/tcp.sh
+    ;;
+  udp)
+    /etc/l4-mitigation/profiles/udp.sh
+    ;;
+  both)
+    /etc/l4-mitigation/profiles/both.sh
+    ;;
+  *)
+    echo "Użycie: $0 {off|tcp|udp|both}"
+    exit 1
+    ;;
+esac
+
+echo "Active L4 profile: $PROFILE"

@@ -1,0 +1,12 @@
+sudo l4-profile off
+sudo l4-profile tcp
+sudo l4-profile udp
+sudo l4-profile both
+
+L4 SYN
+#clear old connections
+ss -K state syn-recv 2>/dev/null
+
+# L4 UDP
+# show table
+sudo iptables -L INPUT -v -n

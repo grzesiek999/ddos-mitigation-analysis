@@ -1,0 +1,35 @@
+#!/bin/bash
+set -e
+
+PROFILE="$1"
+
+case "$PROFILE" in
+  off)
+    ZONES="/etc/nginx/mitigation/zones/off.conf"
+    RULES="/etc/nginx/mitigation/rules/off.conf"
+    ;;
+  conn)
+    ZONES="/etc/nginx/mitigation/zones/conn.conf"
+    RULES="/etc/nginx/mitigation/rules/conn.conf"
+    ;;
+  rate)
+    ZONES="/etc/nginx/mitigation/zones/rate.conf"
+    RULES="/etc/nginx/mitigation/rules/rate.conf"
+    ;;
+  both)
+    ZONES="/etc/nginx/mitigation/zones/both.conf"
+    RULES="/etc/nginx/mitigation/rules/both.conf"
+    ;;
+  *)
+    echo "Użycie: $0 {off|conn|rate|both}"
+    exit 1
+    ;;
+esac
+
+sudo ln -sf "$ZONES" /etc/nginx/mitigation/active-zones.conf
+sudo ln -sf "$RULES" /etc/nginx/mitigation/active-rules.conf
+
+sudo nginx -t
+sudo systemctl reload nginx
+
+echo "Active mitigation nginx profil: $PROFILE"
